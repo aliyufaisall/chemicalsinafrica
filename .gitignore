@@ -7,6 +7,7 @@ __pycache__/
 venv/
 .venv/
 sach_env/
+env/
 ENV/
 generator_env/
 silico_env/

@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chemical Search</title>
-    <style>
+        <style>
         body { 
             font-family: Arial, sans-serif; 
-            margin: 40px; 
+            margin: 40px 20px; 
             background-color: #000000; 
             color: #ffffff; 
         }
@@ -25,8 +24,15 @@
         p {
             color: #aaaaaa;
         }
+        
+        /* Updated with Flexbox to handle narrow phone widths safely */
+        form {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+        }
         input[type="text"] { 
-            width: 75%; 
+            flex: 1; 
             padding: 12px; 
             font-size: 16px; 
             background-color: #111111;
@@ -40,8 +46,7 @@
             outline: none;
         }
         button { 
-            width: 22%;
-            padding: 12px; 
+            padding: 12px 24px; 
             font-size: 16px; 
             background-color: #ffffff; 
             color: #000000; 
@@ -49,15 +54,10 @@
             border-radius: 4px; 
             cursor: pointer; 
             font-weight: bold;
-            float: right;
+            transition: background-color 0.2s;
         }
         button:hover { 
             background-color: #cccccc; 
-        }
-        form::after {
-            content: "";
-            display: table;
-            clear: both;
         }
         .error { 
             color: #ff4d4d; 
@@ -78,20 +78,29 @@
             margin-bottom: 20px; 
             border-radius: 6px; 
         }
+        
+        /* Updated Card Header to prevent float-overlapping on mobile layout */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .card h4 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 18px;
+        }
         .percentage { 
-            font-size: 20px; 
+            font-size: 18px; 
             font-weight: bold; 
             color: #ffffff; 
-            float: right; 
             background: #222222;
             padding: 4px 10px;
             border-radius: 4px;
             border: 1px solid #444444;
-        }
-        .card h4 {
-            margin: 0 0 15px 0;
-            color: #ffffff;
-            font-size: 18px;
+            white-space: nowrap;
         }
         .card p {
             margin: 8px 0;
@@ -112,7 +121,31 @@
             word-break: break-all;
             border: 1px solid #333333;
         }
+
+        /* 📱 MOBILE OPTIMIZATIONS (Applies to screens under 600px wide) */
+        @media (max-width: 600px) {
+            body {
+                margin: 15px 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            form {
+                flex-direction: column;
+                gap: 10px;
+            }
+            button {
+                width: 100%;
+            }
+            .card-header {
+                flex-direction: column-reverse;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
     </style>
+<title>Chemical Search</title>
+    
 </head>
 <body>
 

@@ -55,11 +55,6 @@ htmlcov/
 *.smi~
 *.tmp
 
-# Local data / generated files
-data/raw/
-data/processed/
-*.csv
-*.xlsx
 
 # Model artifacts
 models/*.pkl

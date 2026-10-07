@@ -58,10 +58,13 @@ def search_molecule(request):
             # --- IMPLEMENTATION OF DECISION 2 ---
             # Continuous decay for count-based features instead of rigid binary true/false switches.
             # Small count variances stay close to 1.0; extreme count deltas drop to near 0.0.
-            hbd_sim = 1 / (1 + abs(q_hbd - db_mol.h_bond_donors))
-            hba_sim = 1 / (1 + abs(q_hba - db_mol.h_bond_acceptors))
-            rot_sim = 1 / (1 + abs(q_rot - db_mol.rotatable_bonds))
-            ring_sim = 1 / (1 + abs(q_ring - db_mol.ring_count))
+             # --- OPTIMIZED DECISION 2 WITH SOFT DECAY ---
+            # Using divisors stops a difference of just 1 count from dropping the score to 0.50
+            hbd_sim  = 1 / (1 + (abs(q_hbd - db_mol.h_bond_donors) / 2.0))
+            hba_sim  = 1 / (1 + (abs(q_hba - db_mol.h_bond_acceptors) / 3.0))
+            rot_sim  = 1 / (1 + (abs(q_rot - db_mol.rotatable_bonds) / 4.0))
+            ring_sim = 1 / (1 + (abs(q_ring - db_mol.ring_count) / 2.0))
+
             
             # --- IMPLEMENTATION OF DECISION 3 ---
             # Rebalanced structural weighting matrix. 

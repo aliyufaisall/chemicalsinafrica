@@ -35,10 +35,11 @@ class Command(BaseCommand):
                     )
                     molecules_to_create.append(mol)
                     
-            # Use bulk_create to insert all rows in a single fast database transaction
-            self.stdout.write("Inserting records into database...")
-            Molecule.objects.bulk_create(molecules_to_create, ignore_conflicts=True)
-            self.stdout.write(self.style.SUCCESS(f"Successfully loaded {len(molecules_to_create)} molecules."))
+            # Break up the insert into smaller chunks so the Free Tier database doesn't timeout
+            self.stdout.write(f"Inserting {len(molecules_to_create)} records into database in batches...")
+            Molecule.objects.bulk_create(molecules_to_create, batch_size=500, ignore_conflicts=True)
+            self.stdout.write(self.style.SUCCESS(f"Successfully loaded molecules."))
+
             
         except FileNotFoundError:
             self.stdout.write(self.style.ERROR(f"File not found at: {csv_file_path}"))
